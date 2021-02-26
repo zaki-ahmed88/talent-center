@@ -2,45 +2,42 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Http\Request;
 
 use App\Http\Traits\ApiDesignTrait;
 
 
 
-use App\Models\User;
+use App\Http\Controllers\Controller;
 
-use Illuminate\Http\Request;
-
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\Hash;
+
+use App\Http\Interfaces\StaffInterface;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Validator;
 
-use App\Http\Interfaces\AuthInterface;
+//use App\Http\Interfaces\StaffInterface;
+//use App\Http\Interfaces\StaffInterface;
 
 
 
-class AuthController extends Controller
+class StaffController extends Controller
 {
 
 
-    private $authInterface;
+    private $staffInterface;
 
-
-    public function __construct(AuthInterface $authInterface)
+    public function __construct(StaffInterface $staffInterface)
     {
-        $this->authInterface = $authInterface;
+        $this->staffInterface = $staffInterface;
     }
-    
 
-
-
-
-    public function login(){
-
-        return $this->authInterface->login();
+    public function addStaff(Request $request){
+        //dd($request);
+        return $this->staffInterface->addStaff($request);
     }
 
 

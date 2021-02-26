@@ -4,6 +4,15 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
+
+use App\Models\Role;
+use App\Models\User;
+
+
+use Illuminate\Support\Facades\Hash;
+
+
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -13,6 +22,25 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        
+        $roles = ['Admin', 'Teacher', 'Student', 'Support', 'Secretary'];
+
+        foreach ($roles as $role){
+            Role::create([
+                'name' => $role,
+            ]);
+        }
+
+
+
+
+        User::create([
+            'name' => 'Admin',
+            'email' => 'admin@gmail.com',
+            'phone' => '010000',
+            'password' => Hash::make('12345678'),
+            'status' => 0,
+            'role_id' => 1,
+        ]);
     }
 }

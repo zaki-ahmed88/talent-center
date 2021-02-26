@@ -7,6 +7,8 @@ use App\Http\Controllers\ApiController;
 
 use App\Http\Controllers\AuthController;
 
+use App\Http\Controllers\StaffController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -44,4 +46,11 @@ Route::group([
 
 Route::get('test',[AuthController::class, 'test']);
 
+
+Route::group(['prefix' => 'admin'], function(){
+
+    /** Start Staff Routes */
+    Route::post('staff/add', [StaffController::class, 'addStaff']);
+    //Route::post('login', [AuthController::class, 'login']);
+});
 
