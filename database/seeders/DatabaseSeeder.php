@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        
+
         $roles = ['Admin', 'Teacher', 'Student', 'Support', 'Secretary'];
 
         foreach ($roles as $role){
@@ -41,6 +41,18 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('12345678'),
             'status' => 0,
             'role_id' => 1,
+        ]);
+
+
+
+
+        User::create([
+            'name' => 'Student',
+            'email' => 'student@gmail.com',
+            'phone' => '010000',
+            'password' => Hash::make('12345678'),
+            'status' => 0,
+            'role_id' => 3,
         ]);
     }
 }

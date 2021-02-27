@@ -22,7 +22,7 @@ class User extends Authenticatable implements JWTSubject
     }
 
 
-    
+
     // Rest omitted for brevity
 
     /**
@@ -47,7 +47,7 @@ class User extends Authenticatable implements JWTSubject
 
 
 
-    
+
 
 
     /**
@@ -72,6 +72,8 @@ class User extends Authenticatable implements JWTSubject
     protected $hidden = [
         'password',
         'remember_token',
+        'created_at',
+        'updated_at'
     ];
 
     /**

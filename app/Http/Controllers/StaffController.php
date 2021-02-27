@@ -40,6 +40,11 @@ class StaffController extends Controller
         return $this->staffInterface->addStaff($request);
     }
 
+    public function allStaff(){
+        //dd($request);
+        return $this->staffInterface->allStaff();
+    }
+
 
 
 
@@ -72,17 +77,17 @@ class StaffController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
    /*  public function login()
-    
+
     {
         $credentials = request(['email', 'password']);
 
         //dd(auth()->attempt($credentials));
-        
+
         if (! $token = auth()->attempt($credentials)) {
             return $this->ApiResponse(422, 'unauthorized');
         }
 
-        
+
         return $this->respondWithToken($token);
     } */
 
@@ -108,7 +113,7 @@ class StaffController extends Controller
             'email' => 'required|unique:users',
             'password' => 'required|min:8',
             'phone' => 'required',
-           
+
         ]);
 
         if ($validation->fails()){
@@ -121,7 +126,7 @@ class StaffController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
-            
+
             'status' => 1,
 
             'role_id' => 1,
@@ -181,13 +186,13 @@ class StaffController extends Controller
     /* protected function respondWithToken($token)
     {
 
-        
+
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
              //'expires_in' => auth()->factory()->getTTL() * 60
              'expires_in' => auth('api')->factory()->getTTL() * 60
-             
-        ]); 
+
+        ]);
     } */
 }

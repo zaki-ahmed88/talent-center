@@ -4,11 +4,13 @@ namespace App\Http\Repositories;
 
 use App\Http\Interfaces\AuthInterface;
 use App\Http\Traits\ApiDesignTrait;
-use App\Models\role;
+//use App\Models\role;
+use App\Models\Role;
 use App\Models\User;
 
 use App\Http\Interfaces\StaffInterface;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Validator;
@@ -21,12 +23,14 @@ class StaffRepository implements StaffInterface{
 
 
     private $userModel;
+    private $roleModel;
 
 
 
-    public function __construct(User $user) {
+    public function __construct(User $user, Role $role) {
 
         $this->userModel = $user;
+        $this->roleModel = $role;
     }
 
 
@@ -66,6 +70,22 @@ class StaffRepository implements StaffInterface{
 
     public function allStaff(){
 
+//        $roles = ['Admin', 'Secretary', 'Support'];
+//       $staff = $this->roleModel::whereIn('name', $roles)->get();
+//       dd($staff);
+
+//        $staff = $this->roleModel::where('is_staff', 1)->with('roleUsers')->get();
+
+
+        $is_staff = 1;
+
+        $staff = $this->userModel::whereHas('roleName', function ($query) use ($is_staff){
+            return $query->where('is_staff', $is_staff);
+        })->with('roleName')->get();
+
+//        $staff = $this->userModel::get();
+        return $this->ApiResponse(200, 'Done', null, $staff);
+
     }
 
     public function updateStaff($request){
@@ -76,5 +96,5 @@ class StaffRepository implements StaffInterface{
 
     }
 
-    
+
 }

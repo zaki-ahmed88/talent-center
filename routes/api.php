@@ -51,6 +51,8 @@ Route::group(['prefix' => 'admin'], function(){
 
     /** Start Staff Routes */
     Route::post('staff/add', [StaffController::class, 'addStaff']);
-    //Route::post('login', [AuthController::class, 'login']);
+    Route::get('staff/all', [StaffController::class, 'allStaff']);
+
+
 });
 
