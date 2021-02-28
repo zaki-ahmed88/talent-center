@@ -88,9 +88,7 @@ class StaffRepository implements StaffInterface{
 
     }
 
-    public function updateStaff($request){
 
-    }
 
     public function deleteStaff($request){
 
@@ -120,4 +118,30 @@ class StaffRepository implements StaffInterface{
     }
 
 
+    public function updateStaff($request){
+
+    }
+
+    public function specificStaff($request){
+
+        $validation = Validator::make($request->all(), [
+            'staff_id' => 'required|exists:users,id',
+        ]);
+
+        if($validation->fails()){
+            return $this->ApiResponse(200, 'Validation Error', $validation->errors());
+        }
+
+        $staff = $this->userModel::whereHas('roleName', function ($staff_id){
+            return $staff_id->where('is_staff', 1);
+        })->find($request->staff_id);
+
+        if($staff){
+            return  $this->ApiResponse(200, 'Done', null, $staff);
+        }
+
+        return  $this->ApiResponse(404, 'Not Found');
+
+
+    }
 }

@@ -52,6 +52,13 @@ class StaffController extends Controller
 
 
 
+    public function specificStaff(Request $request){
+
+        return $this->staffInterface->specificStaff($request);
+    }
+
+
+
 
 
 
