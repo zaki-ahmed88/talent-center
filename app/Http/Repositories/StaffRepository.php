@@ -94,6 +94,17 @@ class StaffRepository implements StaffInterface{
 
     public function deleteStaff($request){
 
+        $validation = Validator::make($request->all(), [
+            'staff_id' => 'required|exists:users,id',
+        ]);
+
+        if($validation->fails()){
+            return $this->ApiResponse(422, 'Validation Error', $validation->errors());
+        }
+
+        $this->userModel::find($request->staff_id)->delete();
+
+        return $this->ApiResponse(200, 'Staff Was Deleted');
     }
 
 

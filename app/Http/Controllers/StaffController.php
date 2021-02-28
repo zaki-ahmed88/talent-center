@@ -45,6 +45,11 @@ class StaffController extends Controller
         return $this->staffInterface->allStaff();
     }
 
+    public function deleteStaff(Request $request){
+
+        return $this->staffInterface->deleteStaff($request);
+    }
+
 
 
 
