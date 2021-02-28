@@ -102,9 +102,21 @@ class StaffRepository implements StaffInterface{
             return $this->ApiResponse(422, 'Validation Error', $validation->errors());
         }
 
-        $this->userModel::find($request->staff_id)->delete();
+        $staff = $this->userModel::whereHas('roleName', function ($query){
+            return $query->where('is_staff', 1);
+        })->find($request->staff_id);
 
-        return $this->ApiResponse(200, 'Staff Was Deleted');
+        //dd($staff);
+
+        if($staff){
+
+            $staff->delete();
+            return $this->ApiResponse(200, 'Staff Was Deleted', null, $staff);
+
+        }
+
+        return $this->ApiResponse(422, 'This User Not Staff');
+
     }
 
 
