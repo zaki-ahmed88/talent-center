@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Interfaces\TeachersInterface;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -24,44 +25,44 @@ use Illuminate\Support\Facades\Validator;
 
 
 
-class StaffController extends Controller
+class TeachersController extends Controller
 {
 
 
-    private $staffInterface;
+    private $teachersInterface;
 
-    public function __construct(StaffInterface $staffInterface)
+    public function __construct(TeachersInterface $teachersInterface)
     {
-        $this->staffInterface = $staffInterface;
+        $this->teachersInterface = $teachersInterface;
     }
 
-    public function addStaff(Request $request){
+    public function addTeacher(Request $request){
         //dd($request);
-        return $this->staffInterface->addStaff($request);
+        return $this->teachersInterface->addTeacher($request);
     }
 
-    public function allStaff(){
+    public function allTeachers(){
         //dd($request);
-        return $this->staffInterface->allStaff();
+        return $this->teachersInterface->allTeachers();
     }
 
-    public function deleteStaff(Request $request){
+    public function deleteTeacher(Request $request){
 
-        return $this->staffInterface->deleteStaff($request);
-    }
-
-
-
-    public function specificStaff(Request $request){
-
-        return $this->staffInterface->specificStaff($request);
+        return $this->teachersInterface->deleteTeacher($request);
     }
 
 
 
-    public function updateStaff(Request $request){
+    public function specificTeacher(Request $request){
 
-        return $this->staffInterface->updateStaff($request);
+        return $this->teachersInterface->specificTeacher($request);
+    }
+
+
+
+    public function updateTeacher(Request $request){
+
+        return $this->teachersInterface->updateTeacher($request);
     }
 
 

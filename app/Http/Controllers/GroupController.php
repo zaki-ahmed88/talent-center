@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Interfaces\GroupInterface;
+use App\Http\Interfaces\TeachersInterface;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -24,44 +26,44 @@ use Illuminate\Support\Facades\Validator;
 
 
 
-class StaffController extends Controller
+class GroupController extends Controller
 {
 
 
-    private $staffInterface;
+    private $groupInterface;
 
-    public function __construct(StaffInterface $staffInterface)
+    public function __construct(GroupInterface $groupInterface)
     {
-        $this->staffInterface = $staffInterface;
+        $this->groupInterface = $groupInterface;
     }
 
-    public function addStaff(Request $request){
-        //dd($request);
-        return $this->staffInterface->addStaff($request);
+    public function addGroup(Request $request){
+
+        return $this->groupInterface->addGroup($request);
     }
 
-    public function allStaff(){
-        //dd($request);
-        return $this->staffInterface->allStaff();
+    public function allGroups(){
+
+        return $this->groupInterface->allGroups();
     }
 
-    public function deleteStaff(Request $request){
+    public function deleteGroup(Request $request){
 
-        return $this->staffInterface->deleteStaff($request);
-    }
-
-
-
-    public function specificStaff(Request $request){
-
-        return $this->staffInterface->specificStaff($request);
+        return $this->groupInterface->deleteGroup($request);
     }
 
 
 
-    public function updateStaff(Request $request){
+    public function specificGroup(Request $request){
 
-        return $this->staffInterface->updateStaff($request);
+        return $this->groupInterface->specificGroup($request);
+    }
+
+
+
+    public function updateGroup(Request $request){
+
+        return $this->groupInterface->updateGroup($request);
     }
 
 

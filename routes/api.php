@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\GroupController;
+use App\Http\Controllers\TeachersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -54,6 +56,38 @@ Route::group(['prefix' => 'admin'], function(){
     Route::get('staff/all', [StaffController::class, 'allStaff']);
     Route::post('staff/delete', [StaffController::class, 'deleteStaff']);
     Route::get('staff/specific', [StaffController::class, 'specificStaff']);
+    Route::post('staff/update', [StaffController::class, 'updateStaff']);
+
+
+
+});
+
+Route::group(['prefix' => 'admin'], function(){
+
+    /** Start Staff Routes */
+    Route::post('teacher/add', [TeachersController::class, 'addTeacher']);
+    Route::get('teacher/all', [TeachersController::class, 'allTeachers']);
+    Route::post('teacher/delete', [TeachersController::class, 'deleteTeacher']);
+    Route::get('teacher/specific', [TeachersController::class, 'specificTeacher']);
+    Route::post('teacher/update', [TeachersController::class, 'updateTeacher']);
+
+
+
+});
+
+
+
+
+
+
+Route::group(['prefix' => 'admin'], function(){
+
+    /** Start Staff Routes */
+    Route::post('group/add', [GroupController::class, 'addGroup']);
+    Route::get('group/all', [GroupController::class, 'allGroups']);
+    Route::post('group/delete', [GroupController::class, 'deleteGroup']);
+    Route::get('group/specific', [GroupController::class, 'specificGroup']);
+    Route::post('group/update', [GroupController::class, 'updateGroup']);
 
 
 

@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class GroupDate extends Model
 {
     use HasFactory;
+
+
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Repositories;
 
 use App\Http\Interfaces\AuthInterface;
+use App\Http\Interfaces\TeachersInterface;
 use App\Http\Traits\ApiDesignTrait;
 //use App\Models\role;
 use App\Models\Role;
@@ -16,7 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 
-class StaffRepository implements StaffInterface{
+class TeachersRepository implements TeachersInterface {
 
     use ApiDesignTrait;
 
@@ -36,10 +37,8 @@ class StaffRepository implements StaffInterface{
 
 
 
-    public function addStaff($request)
-    {
+    public function addTeacher($request){
 
-        //dd($request);
        $validation = Validator::make($request->all(),[
            'name' => 'required|min:3',
            'phone' => 'required',
@@ -62,58 +61,51 @@ class StaffRepository implements StaffInterface{
            'status' => 0,
        ]);
 
-       return $this->ApiResponse(200, 'Staff Was Created');
+       return $this->ApiResponse(200, 'Teacher Was Created');
 
     }
 
 
 
-    public function allStaff(){
-
-//        $roles = ['Admin', 'Secretary', 'Support'];
-//       $staff = $this->roleModel::whereIn('name', $roles)->get();
-//       dd($staff);
-
-//        $staff = $this->roleModel::where('is_staff', 1)->with('roleUsers')->get();
+    public function allTeachers(){
 
 
-        $is_staff = 1;
+        $is_teacher = 1;
 
-        $staff = $this->userModel::whereHas('roleName', function ($query) use ($is_staff){
-            return $query->where('is_staff', $is_staff);
+        $teachers = $this->userModel::whereHas('roleName', function ($query) use ($is_teacher){
+            return $query->where('is_teacher', $is_teacher);
         })->with('roleName')->get();
 
-//        $staff = $this->userModel::get();
-        return $this->ApiResponse(200, 'Done', null, $staff);
+        return $this->ApiResponse(200, 'Done', null, $teachers);
 
     }
 
 
 
-    public function deleteStaff($request){
+    public function deleteTeacher($request){
 
         $validation = Validator::make($request->all(), [
-            'staff_id' => 'required|exists:users,id',
+            'teacher_id' => 'required|exists:users,id',
         ]);
 
         if($validation->fails()){
             return $this->ApiResponse(422, 'Validation Error', $validation->errors());
         }
 
-        $staff = $this->userModel::whereHas('roleName', function ($query){
-            return $query->where('is_staff', 1);
-        })->find($request->staff_id);
+        $teacher = $this->userModel::whereHas('roleName', function ($query){
+            return $query->where('is_teacher', 1);
+        })->find($request->teacher_id);
 
         //dd($staff);
 
-        if($staff){
+        if($teacher){
 
-            $staff->delete();
-            return $this->ApiResponse(200, 'Staff Was Deleted', null, $staff);
+            $teacher->delete();
+            return $this->ApiResponse(200, 'Teacher Was Deleted', null, $teacher);
 
         }
 
-        return $this->ApiResponse(422, 'This User Not Staff');
+        return $this->ApiResponse(422, 'This User Not Teacher');
 
     }
 
@@ -122,15 +114,15 @@ class StaffRepository implements StaffInterface{
 
 
 
-    public function updateStaff($request){
+    public function updateTeacher($request){
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|min:3',
             'phone' => 'required',
-            'email' => 'required|email|unique:users,email,'.$request->staff_id,
+            'email' => 'required|email|unique:users,email,'.$request->teacher_id,
             'password' => 'required|min:8',
             'role_id' => 'required|exists:roles,id',
-            'staff_id' => 'required|exists:users,id',
+            'teacher_id' => 'required|exists:users,id',
         ]);
 
         if($validator->fails()){
@@ -138,8 +130,8 @@ class StaffRepository implements StaffInterface{
         }
 
         $staff = $this->userModel::whereHas('roleName', function ($query){
-            return $query->where('is_staff', 1);
-        })->find($request->staff_id);
+            return $query->where('is_teacher', 1);
+        })->find($request->teacher_id);
 
         if($staff){
 
@@ -153,10 +145,10 @@ class StaffRepository implements StaffInterface{
             ]);
 
 
-            return $this->ApiResponse(200, 'Staff Was Updated', null, $staff);
+            return $this->ApiResponse(200, 'Teacher Was Updated', null, $staff);
         }
 
-        return $this->ApiResponse(404, 'Not Found');
+        return $this->ApiResponse(404, 'Teacher Not Found');
 
 
 
@@ -169,25 +161,25 @@ class StaffRepository implements StaffInterface{
 
 
 
-    public function specificStaff($request){
+    public function specificTeacher($request){
 
         $validation = Validator::make($request->all(), [
-            'staff_id' => 'required|exists:users,id',
+            'teacher_id' => 'required|exists:users,id',
         ]);
 
         if($validation->fails()){
             return $this->ApiResponse(200, 'Validation Error', $validation->errors());
         }
 
-        $staff = $this->userModel::whereHas('roleName', function ($staff_id){
-            return $staff_id->where('is_staff', 1);
-        })->find($request->staff_id);
+        $teacher = $this->userModel::whereHas('roleName', function ($teacher_id){
+            return $teacher_id->where('is_teacher', 1);
+        })->find($request->teacher_id);
 
-        if($staff){
-            return  $this->ApiResponse(200, 'Done', null, $staff);
+        if($teacher){
+            return  $this->ApiResponse(200, 'Done', null, $teacher);
         }
 
-        return  $this->ApiResponse(404, 'Not Found');
+        return  $this->ApiResponse(404, 'Teacher Not Found');
 
 
     }
