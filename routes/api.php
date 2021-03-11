@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeachersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -88,6 +89,21 @@ Route::group(['prefix' => 'admin'], function(){
     Route::post('group/delete', [GroupController::class, 'deleteGroup']);
     Route::get('group/specific', [GroupController::class, 'specificGroup']);
     Route::post('group/update', [GroupController::class, 'updateGroup']);
+
+
+
+});
+
+
+
+Route::group(['prefix' => 'admin'], function(){
+
+    /** Start Staff Routes */
+    Route::post('student/add', [StudentController::class, 'addStudent']);
+    Route::get('student/all', [StudentController::class, 'allStudents']);
+    Route::post('student/delete', [StudentController::class, 'deleteStudent']);
+    Route::get('student/specific', [StudentController::class, 'specificStudent']);
+    Route::post('student/update', [StudentController::class, 'updateStudent']);
 
 
 

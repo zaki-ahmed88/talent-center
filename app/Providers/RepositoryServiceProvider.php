@@ -41,6 +41,12 @@ class RepositoryServiceProvider extends ServiceProvider
 
 
 
+        $this->app->bind(
+            'App\Http\Interfaces\StudentInterface',
+            'App\Http\Repositories\StudentRepository'
+        );
+
+
     }
 
     /**

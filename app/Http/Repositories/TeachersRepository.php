@@ -22,7 +22,6 @@ class TeachersRepository implements TeachersInterface {
     use ApiDesignTrait;
 
 
-
     private $userModel;
     private $roleModel;
 
