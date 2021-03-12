@@ -40,11 +40,24 @@ class StudentRepository implements StudentInterface {
         // TODO: Implement addStudent() method.
 
 
+
+
+
+        $groupValidation = Validator::make($request->groups, [
+            'group1.group_id' =>'min:3',
+        ]);
+
+        if($groupValidation->fails()){
+            return $this->ApiResponse(200, 'Validation Error', $groupValidation->errors());
+        }
+
+
         $validation = Validator::make($request->all(), [
             'name' => 'required|min:3',
             'email' => 'required|email|unique:users',
             'phone' => 'required|min:10',
             'password' => 'required',
+            'groups.*' => 'required'
         ]);
 
 
@@ -52,6 +65,45 @@ class StudentRepository implements StudentInterface {
             return $this->ApiResponse(200, 'Validation Error', $validation->errors());
         }
 
+        $groups = $request->groups;
+
+//        dd($groups);
+        for ($i = 0; $i <= count($groups); $i++) {
+            for ($j = $i+1; $j <= count($groups) -1; $j++) {
+
+                if($groups[$i][0] == $groups[$j][0]){
+                    return $this->ApiResponse(200, 'Validation Error', 'Group Is Exist');
+                }
+
+
+            }
+        }
+
+
+
+
+
+
+
+
+//        $array = [];
+//
+//        foreach ($request->groups as $group) {
+//            $requestGroup = explode(',', $group);
+//
+//            if (count($requestGroup) != 3) {
+//                return $this->ApiResponse(422, 'Validation Error', 'Reformat Group Data');
+//            }
+//
+//            if (in_array($requestGroup[0], $array)) {
+//
+//                return $this->ApiResponse(422, 'Validation Error', 'Group is Exist');
+//
+//            }
+//
+//                $array[] = $requestGroup[0];
+//
+//        }
 
 
 
@@ -65,23 +117,67 @@ class StudentRepository implements StudentInterface {
             'role_id' => $studentRole->id,
         ]);
 
-        if($request->has('groups')){
-            foreach ($request->groups as $group){
-                $requestGroup = explode(',', $group);
+
+
+        //dd(count($groups));
+
+        for ($i = 0; $i < count($groups); $i++) {
+            //for ($j = $i+1; $j <= count($groups) -1; $j++) {
+
+
+            //dd($groups[$i+2]);
 
                 $this->studentGroupModel::create([
                     'student_id' =>$student->id,
-                    'group_id' =>$requestGroup[0],
-                    'count' =>$requestGroup[1],
-                    'price' =>$requestGroup[2],
+                    'group_id' => $groups[$i][0],
+                    'count' => $groups[$i][1],
+                    'price' => $groups[$i][2],
                 ]);
-            }
+            //}
         }
 
 
 
+
+
+
+
+
         return $this->ApiResponse(200, 'Student Was Created', null, $student);
+
+
+//        foreach ($request->groups as $group){
+//            $requestGroup = explode(',', $group);
+//
+////            if(count($requestGroup) != 3){
+////                return $this->ApiResponse(422, 'Validation Error', 'Reformat Group Data');
+////            }
+////
+////
+////            if($this->studentGroupModel::where([['group_id', $requestGroup[0]], ['student_id', $student->id]])->first()){
+////
+////                return $this->ApiResponse(422, 'Validation Error', 'This Group Exists');
+////
+////            }
+//
+//
+//
+//            $this->studentGroupModel::create([
+//                'student_id' =>$student->id,
+//                'group_id' =>$requestGroup[0],
+//                'count' =>$requestGroup[1],
+//                'price' =>$requestGroup[2],
+//            ]);
+//        }
+
+
+
+
     }
+
+
+
+
 
 
 
