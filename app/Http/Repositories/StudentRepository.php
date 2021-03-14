@@ -228,6 +228,30 @@ class StudentRepository implements StudentInterface {
         }
 
 
+
+       if($request->has('groups')){
+
+           $groups = $request->groups;
+
+           for ($i = 0; $i <= count($groups); $i++) {
+               for ($j = $i+1; $j <= count($groups) -1; $j++) {
+
+                   if($groups[$i][0] == $groups[$j][0]){
+                       return $this->ApiResponse(200, 'Validation Error', 'Group Is Exist');
+                   }
+
+
+               }
+           }
+       }
+
+
+
+
+
+
+
+
         $student = $this->userModel::find($request->student_id);
         $student->update([
             'name' => $request->name,
@@ -236,16 +260,45 @@ class StudentRepository implements StudentInterface {
             'password' => Hash::make($request->password),
         ]);
 
-        if($request->has('groups')){
-            foreach ($request->groups as $group){
-                $requestGroup = explode(',', $group);
 
-                $this->studentGroupModel::create([
-                    'student_id' =>$request->student_id,
-                    'group_id' =>$requestGroup[0],
-                    'count' =>$requestGroup[1],
-                    'price' =>$requestGroup[2],
-                ]);
+
+
+        if($request->has('groups')){
+
+
+//            foreach ($request->groups as $group){
+//                $requestGroup = explode(',', $group);
+//
+//                $this->studentGroupModel::create([
+//                    'student_id' =>$request->student_id,
+//                    'group_id' =>$requestGroup[0],
+//                    'count' =>$requestGroup[1],
+//                    'price' =>$requestGroup[2],
+//                ]);
+//            }
+
+
+
+            for ($i = 0; $i < count($groups); $i++) {
+
+                $StudentGroup = $this->studentGroupModel::where([['student_id', $request->student_id], ['group_id', $groups[$i][0]]])->first();
+
+                if($StudentGroup){
+                    $StudentGroup->update([
+                       'count' => $groups[$i][1],
+                        'price' => $groups[$i][2],
+                    ]);
+                }else{
+
+//                    dd($groups[$i][0]);
+                    $this->studentGroupModel->create([
+                        'student_id' =>$request->student_id,
+                        'group_id' => $groups[$i][0],
+                        'count' => $groups[$i][1],
+                        'price' => $groups[$i][2],
+                    ]);
+
+                }
             }
         }
 
