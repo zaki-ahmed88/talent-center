@@ -57,7 +57,8 @@ class StudentRepository implements StudentInterface {
             'email' => 'required|email|unique:users',
             'phone' => 'required|min:10',
             'password' => 'required',
-            'groups.*' => 'required'
+            'groups.*' => 'required',
+            //'groups' => ['required', new ValidGroupId()],
         ]);
 
 
@@ -229,6 +230,7 @@ class StudentRepository implements StudentInterface {
 
 
 
+
        if($request->has('groups')){
 
            $groups = $request->groups;
@@ -247,10 +249,7 @@ class StudentRepository implements StudentInterface {
 
 
 
-
-
-
-
+        $requestedGroups = [];
 
         $student = $this->userModel::find($request->student_id);
         $student->update([
@@ -266,6 +265,7 @@ class StudentRepository implements StudentInterface {
         if($request->has('groups')){
 
 
+
 //            foreach ($request->groups as $group){
 //                $requestGroup = explode(',', $group);
 //
@@ -277,9 +277,11 @@ class StudentRepository implements StudentInterface {
 //                ]);
 //            }
 
-
+            $groups = $request->groups;
 
             for ($i = 0; $i < count($groups); $i++) {
+
+                $requestedGroups[] = $groups[$i][0];
 
                 $StudentGroup = $this->studentGroupModel::where([['student_id', $request->student_id], ['group_id', $groups[$i][0]]])->first();
 
@@ -300,6 +302,15 @@ class StudentRepository implements StudentInterface {
 
                 }
             }
+
+
+
+        }
+
+        $studentGroup = $this->studentGroupModel::whereNotIn('group_id', $requestedGroups)->where('student_id', $request->student_id)->get();
+
+        if($studentGroup){
+            $studentGroup->each->delete();
         }
 
         return $this->ApiResponse(200, 'Student Was Updated', null,  $student);
@@ -312,6 +323,8 @@ class StudentRepository implements StudentInterface {
     public function deleteStudentT($request)
     {
         // TODO: Implement deleteStudentT() method.
+
+
     }
 
 

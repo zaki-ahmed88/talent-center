@@ -50,7 +50,24 @@ Route::group([
 Route::get('test',[AuthController::class, 'test']);
 
 
-Route::group(['prefix' => 'admin'], function(){
+//Route::group(['prefix' => 'admin'], function(){
+//
+//});
+
+//Route::group(['prefix' => 'admin'], function(){
+//
+//});
+//
+//
+//
+//Route::group(['prefix' => 'admin'], function(){
+//
+//});
+
+
+
+
+Route::group(['prefix' => 'admin', 'middleware' => 'roles:Admin'], function() {
 
     /** Start Staff Routes */
     Route::post('staff/add', [StaffController::class, 'addStaff']);
@@ -59,31 +76,25 @@ Route::group(['prefix' => 'admin'], function(){
     Route::get('staff/specific', [StaffController::class, 'specificStaff']);
     Route::post('staff/update', [StaffController::class, 'updateStaff']);
 
-
-
-});
-
-Route::group(['prefix' => 'admin'], function(){
-
-    /** Start Staff Routes */
-    Route::post('teacher/add', [TeachersController::class, 'addTeacher']);
-    Route::get('teacher/all', [TeachersController::class, 'allTeachers']);
-    Route::post('teacher/delete', [TeachersController::class, 'deleteTeacher']);
-    Route::get('teacher/specific', [TeachersController::class, 'specificTeacher']);
-    Route::post('teacher/update', [TeachersController::class, 'updateTeacher']);
-
-
-
 });
 
 
 
+Route::group(['prefix' => 'dashboard', 'middleware' => 'roles:Admin.Support.Secretary'], function(){
+
+
+    /** Start student Routes */
+    Route::post('student/add', [StudentController::class, 'addStudent']);
+    Route::get('student/all', [StudentController::class, 'allStudents']);
+    Route::post('student/delete', [StudentController::class, 'deleteStudent']);
+    Route::get('student/specific', [StudentController::class, 'specificStudent']);
+    Route::post('student/update', [StudentController::class, 'updateStudent']);
 
 
 
-Route::group(['prefix' => 'admin'], function(){
 
-    /** Start Staff Routes */
+
+    /** Start group Routes */
     Route::post('group/add', [GroupController::class, 'addGroup']);
     Route::get('group/all', [GroupController::class, 'allGroups']);
     Route::post('group/delete', [GroupController::class, 'deleteGroup']);
@@ -91,20 +102,12 @@ Route::group(['prefix' => 'admin'], function(){
     Route::post('group/update', [GroupController::class, 'updateGroup']);
 
 
-
-});
-
-
-
-Route::group(['prefix' => 'admin'], function(){
-
-    /** Start Staff Routes */
-    Route::post('student/add', [StudentController::class, 'addStudent']);
-    Route::get('student/all', [StudentController::class, 'allStudents']);
-    Route::post('student/delete', [StudentController::class, 'deleteStudent']);
-    Route::get('student/specific', [StudentController::class, 'specificStudent']);
-    Route::post('student/update', [StudentController::class, 'updateStudent']);
-
+    /** Start teacher Routes */
+    Route::post('teacher/add', [TeachersController::class, 'addTeacher']);
+    Route::get('teacher/all', [TeachersController::class, 'allTeachers']);
+    Route::post('teacher/delete', [TeachersController::class, 'deleteTeacher']);
+    Route::get('teacher/specific', [TeachersController::class, 'specificTeacher']);
+    Route::post('teacher/update', [TeachersController::class, 'updateTeacher']);
 
 
 });
