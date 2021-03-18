@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EndUserController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeachersController;
@@ -67,7 +68,7 @@ Route::get('test',[AuthController::class, 'test']);
 
 
 
-Route::group(['prefix' => 'admin', 'middleware' => 'roles:Admin'], function() {
+Route::group(['prefix' => 'admin', 'middleware' => ['jwt.token', 'roles:Admin']], function() {
 
     /** Start Staff Routes */
     Route::post('staff/add', [StaffController::class, 'addStaff']);
@@ -112,3 +113,15 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'roles:Admin.Support.Secr
 
 });
 
+
+
+
+
+
+
+//Route::group(['prefix' => 'enduser', 'middleware' => ['jwt.token', 'roles:Student.Teacher']], function() {
+//
+//    /** Start EndUser Routes */
+//    Route::get('groups', [EndUserController::class, 'userGroups']);
+//
+//});
