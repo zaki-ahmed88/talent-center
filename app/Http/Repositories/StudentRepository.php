@@ -320,9 +320,25 @@ class StudentRepository implements StudentInterface {
 
 
 
-    public function deleteStudentT($request)
+    public function deleteStudent($request)
     {
         // TODO: Implement deleteStudentT() method.
+        $validation = Validator::make($request->all(), [
+
+            'student_id' => 'required|exists:users,id',
+        ]);
+
+        if($validation->fails()){
+            return $this->ApiResponse(200, 'Validation Error', $validation->errors());
+        }
+
+        $student = $this->userModel::find($request->student_id);
+
+        if($student){
+            $student->delete();
+        }
+
+        return $this->ApiResponse(200, 'Student Was Deleted', null,  $student);
 
 
     }
@@ -334,6 +350,21 @@ class StudentRepository implements StudentInterface {
     public function specificStudent($request)
     {
         // TODO: Implement specificStudent() method.
+
+        $validation = Validator::make($request->all(), [
+
+            'student_id' => 'required|exists:users,id',
+        ]);
+
+        if($validation->fails()){
+            return $this->ApiResponse(200, 'Validation Error', $validation->errors());
+        }
+
+        $student = $this->userModel::find($request->student_id);
+
+        return $this->ApiResponse(200, null, null,  $student);
+
+
     }
 
 

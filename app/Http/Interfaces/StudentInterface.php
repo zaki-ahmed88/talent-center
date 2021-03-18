@@ -11,7 +11,7 @@ interface StudentInterface {
 
     public function updateStudent($request);
 
-    public function deleteStudentT($request);
+    public function deleteStudent($request);
 
     public function specificStudent($request);
 
