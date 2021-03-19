@@ -119,9 +119,9 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'roles:Admin.Support.Secr
 
 
 
-//Route::group(['prefix' => 'enduser', 'middleware' => ['jwt.token', 'roles:Student.Teacher']], function() {
-//
-//    /** Start EndUser Routes */
-//    Route::get('groups', [EndUserController::class, 'userGroups']);
-//
-//});
+Route::group(['prefix' => 'enduser', 'middleware' => ['jwt.token', 'roles:Student.Teacher']], function() {
+
+    /** Start EndUser Routes */
+    Route::get('groups', [EndUserController::class, 'userGroups']);
+
+});
