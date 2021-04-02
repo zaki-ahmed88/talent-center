@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\EndUserController;
+use App\Http\Controllers\ExamController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\StudentExamController;
 use App\Http\Controllers\TeachersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -111,6 +114,10 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'roles:Admin.Support.Secr
     Route::post('teacher/update', [TeachersController::class, 'updateTeacher']);
 
 
+
+
+
+
 });
 
 
@@ -119,9 +126,54 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'roles:Admin.Support.Secr
 
 
 
-Route::group(['prefix' => 'enduser', 'middleware' => ['jwt.token', 'roles:Student.Teacher']], function() {
+Route::group(['prefix' => 'teacher', 'middleware' => ['jwt.token', 'roles:Teacher']], function() {
+
+
+
+
 
     /** Start EndUser Routes */
-    Route::get('groups', [EndUserController::class, 'userGroups']);
+//    Route::get('groups', [EndUserController::class, 'userGroups']);
+
+
+
+
+    /** Start Exam Routes */
+    Route::get('exams/types', [ExamController::class, 'examTypes']);
+    Route::get('exams/all', [ExamController::class, 'allExams']);
+    Route::post('exam/add', [ExamController::class, 'addExam']);
+    Route::post('exam/delete', [ExamController::class, 'deleteExam']);
+    Route::post('exam/update', [ExamController::class, 'updateExam']);
+    Route::post('exam/status/update', [ExamController::class, 'updateExamStatus']);
+
+
+
+    Route::get('exams/students', [ExamController::class, 'examStudents']);
+    Route::get('exams/students/details', [ExamController::class, 'examStudentDetails']);
+
+
+
+
+    Route::post('questions/all', [QuestionController::class, 'allQuestions']);
+    Route::post('question/add', [QuestionController::class, 'addQuestion']);
+    Route::post('question/update', [QuestionController::class, 'updateQuestion']);
+    Route::post('question/delete', [QuestionController::class, 'deleteQuestion']);
+
+});
+
+
+
+
+
+
+
+Route::group(['prefix' => 'student', 'middleware' => ['jwt.token', 'roles:Student']], function() {
+
+    Route::get('exams/new', [StudentExamController::class, 'newExams']);
+    Route::post('exams/student/new', [StudentExamController::class, 'newStudentExam']);
+    Route::post('exams/students/store', [StudentExamController::class, 'storeStudentExam']);
+
+
+
 
 });

@@ -68,7 +68,7 @@ class StudentRepository implements StudentInterface {
 
         $groups = $request->groups;
 
-//        dd($groups);
+
         for ($i = 0; $i <= count($groups); $i++) {
             for ($j = $i+1; $j <= count($groups) -1; $j++) {
 

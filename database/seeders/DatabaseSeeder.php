@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\ExamType;
 use Illuminate\Database\Seeder;
 
 
@@ -34,8 +35,23 @@ class DatabaseSeeder extends Seeder
 
 
 
+
+        $examTypes = ['True&False'=>[0, 1], 'Choices'=>[1, 1], 'Essays'=>[0, 0]];
+        foreach ($examTypes as $key => $value){
+            examType::create([
+                'name' => $key,
+                'is_mark' => $value[0],
+                'choices' => $value[1],
+            ]);
+        }
+
+
+
+
+
+
         User::create([
-            'name' => 'Admin',
+            'name' => 'AdminName',
             'email' => 'admin@gmail.com',
             'phone' => '010000',
             'password' => Hash::make('12345678'),
@@ -45,14 +61,46 @@ class DatabaseSeeder extends Seeder
 
 
 
+        User::create([
+            'name' => 'TeacherName',
+            'email' => 'teacher@gmail.com',
+            'phone' => '010000',
+            'password' => Hash::make('12345678'),
+            'status' => 0,
+            'role_id' => 2,
+        ]);
+
+
 
         User::create([
-            'name' => 'Student',
+            'name' => 'StudentName',
             'email' => 'student@gmail.com',
             'phone' => '010000',
             'password' => Hash::make('12345678'),
             'status' => 0,
             'role_id' => 3,
+        ]);
+
+
+
+        User::create([
+            'name' => 'SupportName',
+            'email' => 'support@gmail.com',
+            'phone' => '010000',
+            'password' => Hash::make('12345678'),
+            'status' => 0,
+            'role_id' => 4,
+        ]);
+
+
+
+        User::create([
+            'name' => 'SecretaryName',
+            'email' => 'secretary@gmail.com',
+            'phone' => '010000',
+            'password' => Hash::make('12345678'),
+            'status' => 0,
+            'role_id' => 5,
         ]);
     }
 }

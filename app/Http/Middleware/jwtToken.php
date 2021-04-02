@@ -36,7 +36,7 @@ class jwtToken
                     return $this->ApiResponse(422, 'this token is Invalid');
 
                 }else {
-                    return $this->ApiResponse(422, 'this token is found');
+                    return $this->ApiResponse(422, 'this token is not found');
                 }
 
             }

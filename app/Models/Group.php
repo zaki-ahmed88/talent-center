@@ -20,4 +20,10 @@ class Group extends Model
 
     protected $hidden = ['created_at', 'updated_at', 'created_by'];
 
+
+
+    public function examTypes(){
+
+        return $this->hasOne(ExamType::class, 'type_id', 'id');
+    }
 }
