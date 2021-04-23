@@ -159,6 +159,16 @@ Route::group(['prefix' => 'teacher', 'middleware' => ['jwt.token', 'roles:Teache
     Route::post('question/update', [QuestionController::class, 'updateQuestion']);
     Route::post('question/delete', [QuestionController::class, 'deleteQuestion']);
 
+
+
+
+
+
+
+    /** Start File Routes */
+    Route::post('file/add', [TeachersController::class, 'addFile']);
+    Route::get('files', [TeachersController::class, 'allFiles']);
+
 });
 
 
@@ -172,6 +182,8 @@ Route::group(['prefix' => 'student', 'middleware' => ['jwt.token', 'roles:Studen
     Route::get('exams/new', [StudentExamController::class, 'newExams']);
     Route::post('exams/student/new', [StudentExamController::class, 'newStudentExam']);
     Route::post('exams/students/store', [StudentExamController::class, 'storeStudentExam']);
+
+
 
 
 

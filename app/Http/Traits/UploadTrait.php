@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\File;
 trait UploadTrait{
 
 
-    public function upload($folderName, $image): strng
+    public function upload($folderName, $image): string
     {
 
         $imageName = $folderName . '_' . time() . $image -> getClientOriginalExtension();

@@ -15,4 +15,10 @@ interface TeachersInterface {
 
     public function specificTeacher($request);
 
+
+    public function addFile($request);
+
+
+    public function allFiles($request);
+
 }

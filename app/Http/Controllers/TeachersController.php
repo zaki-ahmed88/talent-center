@@ -67,6 +67,20 @@ class TeachersController extends Controller
 
 
 
+    public function addFile(Request $request){
+
+        return $this->teachersInterface->addFile($request);
+    }
+
+
+
+    public function allFiles(Request $request){
+
+        return $this->teachersInterface->allFiles($request);
+    }
+
+
+
 
 
 
